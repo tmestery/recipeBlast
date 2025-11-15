@@ -25,24 +25,28 @@ public class UserInfoController {
     // GET http://localhost:8080/info/score/average/{username}
     @GetMapping("/score/average/{username}")
     public Double getUserAverageScore(@PathVariable String username) {
+        System.out.println("Getting average score for user!");
         return foodScoreService.getWebUserAverageScore(username);
     }
 
     // GET http://localhost:8080/info/total/scan/{username}
     @GetMapping("/total/scan/{username}")
     public int getUserTotalScans(@PathVariable String username) {
+        System.out.println("Getting total scans for user!");
         return totalScanService.getWebUserTotalScans(username);
     }
 
     // GET http://localhost:8080/info/total/warning/{username}
     @GetMapping("/total/warning/{username}")
     public long getUserTotalWarnings(@PathVariable String username) {
+        System.out.println("Getting total warnings for user!");
         return foodScoreService.getUserTotalWarnings(username);
     }
 
     // GET http://localhost:8080/info/total/warning/item/{itemName}
     @GetMapping("/total/warning/item/{itemName}")
     public int getTotalWarningsForItem(@PathVariable String itemName) {
+        System.out.println("Getting total warnings for a specific item!");
         return foodScoreService.getTotalWarningsForItem(itemName);
     }
 }

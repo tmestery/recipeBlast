@@ -9,7 +9,6 @@ import java.util.List;
 @Repository
 public interface FoodItemScoreRepository extends JpaRepository<FoodItemScore, Long> {
 
-    List<FoodItemScore> findByUsername(String username);
     List<FoodItemScore> findByItemName(String itemName);
 
     @Query("SELECT AVG(f.score) FROM FoodItemScore f WHERE f.user.username = :username")
