@@ -22,19 +22,19 @@ public class FoodItemScore {
     @ManyToOne
     private WebUser user;
 
-    private String getItemName() {
+    public String getItemName() {
         return itemName;
     }
 
-    private void setItemName(String itemName) {
+    public void setItemName(String itemName) {
         this.itemName = itemName;
     }
 
-    private String getBadIngredients() {
+    public String getBadIngredients() {
         return badIngredients;
     }
 
-    private void setBadIngredients(String badIngredients) {
+    public void setBadIngredients(String badIngredients) {
         this.badIngredients = badIngredients;
     }
 
@@ -52,5 +52,11 @@ public class FoodItemScore {
 
     public void setUser(WebUser user) {
         this.user = user;
+    }
+
+    // Gets the total warnings for a specific item
+    public int getWarningCount() {
+        if (badIngredients == null || badIngredients.isEmpty()) return 0;
+        return badIngredients.split(",").length; // assuming comma-separated ingredients
     }
 }

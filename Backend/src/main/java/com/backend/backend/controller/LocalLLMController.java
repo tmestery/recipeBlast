@@ -20,7 +20,7 @@ public class LocalLLMController {
     // Example Request for analyzing:
     //    {
     //        "productName": "Frosted Strawberry Pop-Tarts",
-    //            "ingredientsList": "Nutrition Facts\\nServing Size 2 pastries (88g)\\nCalories 200\\nTotal Fat 5g\\nSaturated Fat 2g\\nTrans Fat 0g\\nCholesterol 0mg\\nSodium 180mg\\nTotal Carbohydrate 36g\\nDietary Fiber 1g\\nTotal Sugars 16g\\nIncl. Added Sugars 9g\\nProtein 2g\\nVitamin D 0mcg\\nCalcium 0mg\\nIron 2mg\\nPotassium 55mg\\n* The % Daily Value (DV) tells you how much a nutrient in a serving of food contributes to a daily diet. 2,000 calories a day is used for general nutrition advice."
+    //        "ingredientsList": "Nutrition Facts\\nServing Size 2 pastries (88g)\\nCalories 200\\nTotal Fat 5g\\nSaturated Fat 2g\\nTrans Fat 0g\\nCholesterol 0mg\\nSodium 180mg\\nTotal Carbohydrate 36g\\nDietary Fiber 1g\\nTotal Sugars 16g\\nIncl. Added Sugars 9g\\nProtein 2g\\nVitamin D 0mcg\\nCalcium 0mg\\nIron 2mg\\nPotassium 55mg\\n* The % Daily Value (DV) tells you how much a nutrient in a serving of food contributes to a daily diet. 2,000 calories a day is used for general nutrition advice."
     //    }
 
     // POST http://localhost:8080/llm/analyze
