@@ -8,6 +8,8 @@
   color: var(--color-indigodye);
 }
 .page-content {
+  min-height: 500px;
+  margin: 0px 5% 0px 5%;
   display: grid;
   grid-template-columns: 2fr 3fr 2fr;
 }
@@ -18,4 +20,11 @@
   margin: 8px 0px 8px 0px;
   text-align: center;
   color: var(--color-indigodye);
+}
+.scan-upload-form {
+  height: 100%;
+  background-image: url(../assets/gray-plate.jpeg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
 }
