@@ -1,4 +1,4 @@
-package com.backend.backend.model;
+package com.backend.backend.utils;
 
 import org.springframework.core.io.InputStreamResource;
 

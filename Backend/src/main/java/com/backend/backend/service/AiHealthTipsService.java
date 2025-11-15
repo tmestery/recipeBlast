@@ -46,7 +46,19 @@ public class AiHealthTipsService {
             // Parse Ollama JSON that's received
             Map<String, Object> aiResult = objectMapper.readValue(responseString, Map.class);
 
-            return (String) aiResult.get("completion");
+            // Ollama typically returns something like: {"results":[{"content":"..."}]}
+            List<Map<String, Object>> results = (List<Map<String, Object>>) aiResult.get("results");
+            if (results != null && !results.isEmpty()) {
+                String tip = (String) results.get(0).get("content");
+                if (tip != null && !tip.isEmpty()) {
+                    return tip;
+                }
+            }
+
+            // Fallback if content is missing
+            Random randomGen = new Random();
+            int randomSpot = randomGen.nextInt(backup_tips_list.size());
+            return backup_tips_list.get(randomSpot);
         } catch (Exception e) {
             e.printStackTrace();
             // If it fails, resort to returning a pre-made list of tips
