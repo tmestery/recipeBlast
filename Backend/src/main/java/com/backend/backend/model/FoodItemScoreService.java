@@ -12,4 +12,8 @@ public class FoodItemScoreService {
     public double getWebUserAverageScore(String username) {
         return foodItemScoreRepo.getWebUserAverageScore(username);
     }
+
+    public long getUserTotalWarnings(String username) {
+        return foodItemScoreRepo.getTotalWarnings(username);
+    }
 }
