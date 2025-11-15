@@ -44,8 +44,9 @@ export default function SignupPage(){
     function handleChange(event){
         const {name, value} = event.target
         setSignupInfo((prev) => {
-            console.log({...prev, [name]:value})
-            return {...prev, [name]:value}
+            const newFormData = {...prev, [name]:value}
+            console.log(newFormData)
+            return newFormData
         })
     }
 
@@ -54,11 +55,11 @@ export default function SignupPage(){
             <h2>Sign Up</h2>
             <form onSubmit={handleSubmit}>
                 <label>Email</label>
-                <input type="text" onChange={handleChange} />
+                <input type="text" name="email" onChange={handleChange} />
                 <label>Username</label>
-                <input type="text" onChange={handleChange} />
+                <input type="text" name="username" onChange={handleChange} />
                 <label>Password</label>
-                <input type="password" onChange={handleChange} />
+                <input type="password" name="password" onChange={handleChange} />
                 <input type="submit" />
             </form>
             <Link to="/auth/login">Already have an account?</Link>

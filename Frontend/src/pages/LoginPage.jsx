@@ -43,8 +43,9 @@ export default function LoginPage(){
     function handleChange(event){
         const {name, value} = event.target
         setLoginInfo((prev) => {
-            console.log({...prev, [name]:value})
-            return {...prev, [name]:value}
+            const newFormData = {...prev, [name]:value}
+            console.log(newFormData)
+            return newFormData
         })
     }
 
@@ -53,9 +54,9 @@ export default function LoginPage(){
             <h2>Log In</h2>
             <form onSubmit={handleSubmit}>
                 <label>Username</label>
-                <input type="text" onChange={handleChange} />
+                <input type="text" name="username" onChange={handleChange} />
                 <label>Password</label>
-                <input type="password" onChange={handleChange} />
+                <input type="password" name="password" onChange={handleChange} />
                 <input type="submit" />
             </form>
             <Link to="/auth/signup">Don't have an account?</Link>
