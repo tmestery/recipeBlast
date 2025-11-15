@@ -53,16 +53,18 @@ export default function LoginPage({setUserInfo}){
     }
 
     return (
-        <div className="auth-container">
-            <h2>Log In</h2>
-            <form onSubmit={handleSubmit}>
-                <label>Username</label>
-                <input type="text" name="username" onChange={handleChange} />
-                <label>Password</label>
-                <input type="password" name="password" onChange={handleChange} />
-                <input type="submit" />
-            </form>
-            <Link to="/auth/signup">Don't have an account?</Link>
+        <div className="auth-background">
+            <div className="auth-container">
+                <h1>Log In</h1>
+                <form onSubmit={handleSubmit}>
+                    <label>Username</label>
+                    <input type="text" name="username" onChange={handleChange} />
+                    <label>Password</label>
+                    <input type="password" name="password" onChange={handleChange} />
+                    <input type="submit" value="Log In"/>
+                </form>
+                <Link to="/auth/signup">Don't have an account?</Link>
+            </div>
         </div>
     )
 }

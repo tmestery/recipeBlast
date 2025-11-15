@@ -51,18 +51,20 @@ export default function SignupPage(){
     }
 
     return (
-        <div className="auth-container">
-            <h2>Sign Up</h2>
-            <form onSubmit={handleSubmit}>
-                <label>Email</label>
-                <input type="text" name="email" onChange={handleChange} />
-                <label>Username</label>
-                <input type="text" name="username" onChange={handleChange} />
-                <label>Password</label>
-                <input type="password" name="password" onChange={handleChange} />
-                <input type="submit" />
-            </form>
-            <Link to="/auth/login">Already have an account?</Link>
+        <div className="auth-background">
+            <div className="auth-container">
+                <h1>Sign Up</h1>
+                <form onSubmit={handleSubmit}>
+                    <label>Email</label>
+                    <input type="text" name="email" onChange={handleChange} />
+                    <label>Username</label>
+                    <input type="text" name="username" onChange={handleChange} />
+                    <label>Password</label>
+                    <input type="password" name="password" onChange={handleChange} />
+                    <input type="submit" value="Sign Up" />
+                </form>
+                <Link to="/auth/login">Already have an account?</Link>
+            </div>
         </div>
     )
 }
