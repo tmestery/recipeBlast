@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-import NotFoundPage from './components/NotFoundPage'
-import HomePage from './components/HomePage'
-import LoginPage from './components/LoginPage'
-import SignupPage from './components/SignupPage'
+import NotFoundPage from './pages/NotFoundPage'
+import HomePage from './pages/HomePage'
+import LoginPage from './pages/LoginPage'
+import SignupPage from './pages/SignupPage'
+import HistoryPage from './pages/HistoryPage'
+import ProfilePage from './pages/ProfilePage'
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
       <Routes>
         <Route path='/'>
           <Route index element={<HomePage />} />
+          <Route path='history' element={<HistoryPage />} />
+          <Route path='profile' element={<ProfilePage />} />
         </Route>
         <Route path='/auth/'>
           <Route path='login' element={<LoginPage />} />
