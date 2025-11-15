@@ -84,7 +84,7 @@ function LoadingScreen({progress, setProgress, maxProgress}) {
 
 export default function ScanPage(){
     const [scanProgress, setScanProgress] = useState(0)
-    const [maxProgress, setMaxProgress] = useState(Math.floor(Math.random*20)+20)
+    const [maxProgress, setMaxProgress] = useState(50)
     const [ingredients, setIngredients] = useState({})
     const location = useLocation()
     const navigate = useNavigate()
@@ -92,11 +92,14 @@ export default function ScanPage(){
     const {file} = location.state || {};
 
     useEffect(()=>{
-        if(maxProgress < 95 && file != {}){
-            fetchParseImage()
-        } else if(maxProgress >= 95){
-            fetchLLMAnalyze()
-        }
+      console.log(maxProgress)
+      if(maxProgress < 95 && file != {}){
+        fetchParseImage()
+      } else if(maxProgress >= 95){
+        fetchLLMAnalyze()
+      } else if(maxProgress == 100){
+        navigate('/')
+      }
     }, [maxProgress])
 
     async function fetchParseImage(){
@@ -120,7 +123,7 @@ export default function ScanPage(){
         }
     }
 
-    async function fetchParseImage(){
+    async function fetchLLMAnalyze(){
         try {
             const response = await fetch('http://localhost:8080/llm/analyze', {
                 method: "POST",
