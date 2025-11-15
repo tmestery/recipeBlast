@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import '../styles/auth.css'
 
 export default function LoginPage(){
@@ -7,9 +7,37 @@ export default function LoginPage(){
         username: "",
         password: ""
     })
+    const navigate = useNavigate()
+
+    function validateFields(){
+        if(!loginInfo.username || !loginInfo.password){
+            alert("All fields must be filled")
+            return false;
+        }
+        return true;
+    }
 
     async function handleSubmit(event){
         event.preventDefault()
+        try{
+            if(validateFields()){
+                const response = await fetch("http://localhost:8080/login", {
+                    method: "POST",
+                    headers: 
+                    {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(loginInfo)
+                })
+                if(response.ok){
+                    navigate('/')
+                } else{
+                    alert("Username or Password was incorrect")
+                }
+            }
+        } catch(error){
+            console.error(error.message)
+        }
     }
 
     function handleChange(event){
