@@ -112,9 +112,6 @@ export default function ScanPage(){
 
             const response = await fetch('http://localhost:8080/imagetext/parse', {
                 method: "POST",
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                },
                 body: formData
             })
             const result = await response.json()
