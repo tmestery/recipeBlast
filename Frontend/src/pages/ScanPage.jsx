@@ -2,8 +2,8 @@ import {useState, useEffect} from 'react'
 import {useNavigate, useLocation} from 'react-router-dom'
 import LoadingScreen from '../components/Loading.jsx'
 
-const MAX_PROGRESS_IMAGEPARSE = 94
-const MAX_PROGRESS_LLMANALYZE = 99
+const MAX_PROGRESS_IMAGEPARSE = 74
+const MAX_PROGRESS_LLMANALYZE = 97
 const MAX_PROGRESS = 100
 
 export default function ScanPage(){
