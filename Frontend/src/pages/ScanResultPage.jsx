@@ -48,12 +48,12 @@ export default function ScanResultPage() {
               >
                 <div className="flex items-start gap-3">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                    ingredient.severity === ingredient.score >= 33 ? 'text-yellow-600' :
-                      ingredient.severity === ingredient.score > 15 ? 'text-amber-600' : 'text-red-600'
+                    ingredient.score >= 33 ? 'text-yellow-600' :
+                    ingredient.score > 15 ? 'text-amber-600' : 'text-red-600'
                   }`}>
                     <AlertCircle className={`w-4 h-4 ${
-                      ingredient.severity === ingredient.score >= 33 ? 'text-yellow-600' :
-                      ingredient.severity === ingredient.score > 15 ? 'text-amber-600' : 'text-red-600'
+                      ingredient.score >= 33 ? 'text-yellow-600' :
+                      ingredient.score > 15 ? 'text-amber-600' : 'text-red-600'
                     }`} />
                   </div>
                   <div className="flex-1">
