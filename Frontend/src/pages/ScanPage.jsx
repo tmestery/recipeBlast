@@ -37,9 +37,9 @@ export default function ScanPage(){
             })
             const result = await response.json()
             if(response.ok){
-                setIngredients(result.body)
-                console.log("Result:\n"+result.body)
-                console.log("Response:\n"+response.body)
+                setIngredients(result)
+                console.log("Result:\n"+result)
+                console.log("Response:\n"+response)
                 setScanProgress(MAX_PROGRESS_IMAGEPARSE)
                 setMaxProgress(MAX_PROGRESS_LLMANALYZE)
             }
