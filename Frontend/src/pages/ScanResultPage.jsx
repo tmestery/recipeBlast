@@ -8,6 +8,8 @@ export default function ScanResultPage() {
   const location = useLocation()
   const {scanResult} = location.state || {}
 
+  console.log(scanResult)
+
   const score = scanResult.score
   const analysis = scanResult.analysis
   const badIngredients = scanResult.ingredients_of_concern
