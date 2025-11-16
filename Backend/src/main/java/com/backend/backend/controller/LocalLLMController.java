@@ -29,7 +29,9 @@ public class LocalLLMController {
         String productName = payload.get("productName");
         String ingredientsList = payload.get("ingredientsList");
         System.out.println("Ollama request initiated!");
-        return aiService.analyzeIngredientsWithRecommendation(productName, ingredientsList);
+        Map<String, Object> ai = aiService.analyzeIngredientsWithRecommendation(productName, ingredientsList);
+//      return aiService.analyzeIngredientsWithRecommendation(productName, ingredientsList);
+        return ai;
     }
 
     // GET http://localhost:8080/llm/health/tip
