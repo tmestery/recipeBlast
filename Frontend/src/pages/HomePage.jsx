@@ -8,6 +8,7 @@ export default function HomeScreen({userInfo}) {
   const navigate = useNavigate()
 
     function handleImageUpload(event){
+      console.log({state: {productName: productName, file: event.target.files[0]}})
         navigate('/scan', {state: {productName: productName, file: event.target.files[0]}})
     }
 
