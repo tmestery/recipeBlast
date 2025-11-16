@@ -43,7 +43,7 @@ export default function ScanPage(){
                 setScanProgress(MAX_PROGRESS_IMAGEPARSE)
                 setMaxProgress(MAX_PROGRESS_LLMANALYZE)
             }
-        } catch (error) {
+        } catch(error) {
             console.error(error.message)
         }
     }
@@ -63,7 +63,7 @@ export default function ScanPage(){
             if(response.ok){
               console.log(result)
               setScanProgress(MAX_PROGRESS)
-              // navigate('/scan/result', {state : {scanResult: result}})
+              navigate('/scan/result', {state : {scanResult: result}})
             }         
         } catch (error) {
             console.error(error.message)

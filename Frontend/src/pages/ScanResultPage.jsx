@@ -72,7 +72,7 @@ export default function ScanResultPage() {
                 <div className="flex items-center justify-between mb-4" style={{width:"100%"}}>
                     <div className="flex items-center gap-3" style={{width:"100%"}}>
                         <div style={{width:"100%"}}>
-                            <h1 className="text-right text-gray-900" style={{fontSize:42+"px", textAlign:"center"}}>Quest Protein Bar</h1>
+                            <h1 className="text-right text-gray-900" style={{fontSize:42+"px", textAlign:"center"}}>{scanResult.productName}</h1>
                             {/* <p className="text-sm text-gray-500 text-right">Chocolate Chip</p> */}
                         </div>
                     </div>
