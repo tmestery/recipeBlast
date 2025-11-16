@@ -72,12 +72,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage({ setUserInfo }) {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   function validateFields() {
-    if (!email || !password) {
+    if (!username || !password) {
       alert('All fields must be filled');
       return false;
     }
@@ -92,11 +92,11 @@ export default function LoginPage({ setUserInfo }) {
       const response = await fetch('http://localhost:8080/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: email, password }),
+        body: JSON.stringify({ username: username, password }),
       });
 
       if (response.ok) {
-        setUserInfo(prev => ({ ...prev, username: email }));
+        setUserInfo(prev => ({ ...prev, username: username }));
         navigate('/');
       } else {
         alert('Username or Password was incorrect');
@@ -149,13 +149,12 @@ export default function LoginPage({ setUserInfo }) {
         {/* Form */}
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
-            <label htmlFor="email" style={{ marginBottom: '0.25rem', color: '#2d3748' }}>Email</label>
+            <label style={{ marginBottom: '0.25rem', color: '#2d3748' }}>Username</label>
             <input
-              id="email"
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
+              id="username"
+              type="username"
+              placeholder="Enter your username"
+              onChange={e => setUsername(e.target.value)}
               required
               style={{
                 padding: '0.5rem',
@@ -166,12 +165,11 @@ export default function LoginPage({ setUserInfo }) {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
-            <label htmlFor="password" style={{ marginBottom: '0.25rem', color: '#2d3748' }}>Password</label>
+            <label style={{ marginBottom: '0.25rem', color: '#2d3748' }}>Password</label>
             <input
               id="password"
               type="password"
               placeholder="Enter your password"
-              value={password}
               onChange={e => setPassword(e.target.value)}
               required
               style={{

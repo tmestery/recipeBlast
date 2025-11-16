@@ -138,7 +138,7 @@ export default function ScanResultPage() {
             {/* Bottom Button */}
             <div className="px-6 pb-8 mt-auto">
                 <Link to="/">
-                    <button className="w-full py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all active:scale-98 scan-result-button"> {/**bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white */}
+                    <button className="w-full py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all active:scale-98 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white"> {/**bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white */}
                         Try Another Scan
                     </button>
                 </Link>
