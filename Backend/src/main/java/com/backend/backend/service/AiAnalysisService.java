@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -22,16 +23,9 @@ public class AiAnalysisService {
     }
 
     public Map<String, Object> analyzeIngredientsWithRecommendation(String productName, String ingredientsList) {
-        // Building the prompt
         String prompt = "You are a nutrition analysis model. You are given a product name and its ingredients list. " +
-                "Your job is to evaluate the product's health quality based on: whole vs processed ingredients, added sugars, unhealthy oils, artificial additives, and fiber content.\n\n" +
-                "Scoring Guide:\n" +
-                "- 90-100 = Very healthy\n" +
-                "- 70-89 = Mostly healthy\n" +
-                "- 50-69 = Moderate\n" +
-                "- 30-49 = Processed\n" +
-                "- 0-29 = Highly processed\n\n" +
-                "You MUST output ONLY the following JSON structure, with no extra commentary or text:\n" +
+                "Evaluate the product's health quality.\n\n" +
+                "Output ONLY the following JSON:\n" +
                 "{\n" +
                 "  \"product_name\": \"" + productName + "\",\n" +
                 "  \"score\": <number>,\n" +
@@ -51,24 +45,39 @@ public class AiAnalysisService {
                 "prompt", prompt
         );
 
-        String responseString = restTemplate.postForObject(OLLAMA_URL, requestBody, String.class);
-
         try {
-            // Parse Ollama JSON that's received
-            Map<String, Object> aiResult = objectMapper.readValue(responseString, Map.class);
+            // Step 1: call Ollama
+            String responseString = restTemplate.postForObject(OLLAMA_URL, requestBody, String.class);
 
-            // Save/update FoodItem in PSQL db
+            // Step 2: parse top-level response
+            Map<String, Object> topLevel = objectMapper.readValue(responseString, Map.class);
+            String aiText = (String) topLevel.get("response");
+
+            // Step 3: extract JSON block from response string
+            int start = aiText.indexOf('{');
+            int end = aiText.lastIndexOf('}');
+            if (start == -1 || end == -1 || end <= start) {
+                throw new RuntimeException("No valid JSON found in AI response");
+            }
+            String jsonBlock = aiText.substring(start, end + 1);
+
+            // Step 4: parse the JSON block
+            Map<String, Object> aiResult = objectMapper.readValue(jsonBlock, Map.class);
+
+            // Step 5: save/update FoodItem in DB
             FoodItem foodItem = foodItemRepository.findByItemName(productName)
                     .orElse(new FoodItem());
-
             foodItem.setItemName(productName);
             foodItem.setRawIngredientList(ingredientsList);
-            foodItem.setHealthScore((int) aiResult.getOrDefault("score", 0));
+            foodItem.setHealthScore(((Number) aiResult.getOrDefault("score", 0)).intValue());
             foodItem.setNutritionBreakdown((String) aiResult.getOrDefault("analysis", "N/A"));
-            foodItem.setGeneratedWarnings(String.join(", ",
-                    ((java.util.List<String>) aiResult.getOrDefault("ingredients_of_concern", java.util.List.of()))));
 
-            // Recommended the alternative object
+            List<?> concernList = (List<?>) aiResult.getOrDefault("ingredients_of_concern", List.of());
+            List<String> ingredientsOfConcern = concernList.stream()
+                    .map(Object::toString)
+                    .toList();
+            foodItem.setGeneratedWarnings(String.join(", ", ingredientsOfConcern));
+
             Map<String, Object> alt = (Map<String, Object>) aiResult.get("recommended_alternative");
             if (alt != null) {
                 String recText = String.format("Try %s by %s — %s",
@@ -80,7 +89,14 @@ public class AiAnalysisService {
 
             foodItemRepository.save(foodItem);
 
-            return aiResult;
+            // Step 6: return cleaned JSON to frontend
+            return Map.of(
+                    "product_name", productName,
+                    "score", foodItem.getHealthScore(),
+                    "analysis", foodItem.getNutritionBreakdown(),
+                    "ingredients_of_concern", ingredientsOfConcern,
+                    "recommended_alternative", alt != null ? alt : Map.of()
+            );
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,9 +104,10 @@ public class AiAnalysisService {
                     "product_name", productName,
                     "score", 0,
                     "analysis", "Error parsing LLM response",
-                    "ingredients_of_concern", new String[]{},
+                    "ingredients_of_concern", List.of(),
                     "recommended_alternative", Map.of()
             );
         }
     }
+
 }

@@ -30,7 +30,6 @@ public class LocalLLMController {
         String ingredientsList = payload.get("ingredientsList");
         System.out.println("Ollama request initiated!");
         Map<String, Object> ai = aiService.analyzeIngredientsWithRecommendation(productName, ingredientsList);
-//      return aiService.analyzeIngredientsWithRecommendation(productName, ingredientsList);
         return ai;
     }
 
