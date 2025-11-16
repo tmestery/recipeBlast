@@ -14,9 +14,8 @@ export default function HistoryPage({userInfo}){
 
     async function getScans(){
         try {
-            const response = await fetch('url', {
-                method: "GET"
-            })
+            const response = await fetch('url') 
+            const result = await response.json()
         } catch (error) {
             console.log(error.message)
         }

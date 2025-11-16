@@ -50,6 +50,8 @@ export default function ScanPage(){
 
     async function fetchLLMAnalyze(){
         try {
+            console.log(JSON.stringify({productName: "Product Name", ingredientsList: ingredients}))
+
             const response = await fetch('http://localhost:8080/llm/analyze', {
               method: "POST",
               headers: {
