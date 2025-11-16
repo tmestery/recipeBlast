@@ -1,9 +1,17 @@
 import {useState, useEffect} from 'react'
 import {Leaf} from 'lucide-react'
 import {useNavigate, useLocation, Link} from 'react-router-dom'
+import nutritionFacts from '../assets/nutrition-facts'
 
+const MAX_PROGRESS_IMAGEPARSE = 94
+const MAX_PROGRESS_LLMANALYZE = 99
+const MAX_PROGRESS = 100
+
+const NUM_NUTRITION_FACTS = 20
 
 function LoadingScreen({progress, setProgress, maxProgress}) {
+  const [currFactIndex, setCurrFactIndex] = useState(0)
+
   useEffect(() => {
     const interval = setInterval(() => {
       setProgress((prev) => {
@@ -11,9 +19,17 @@ function LoadingScreen({progress, setProgress, maxProgress}) {
           clearInterval(interval);
           return maxProgress;
         }
-        return prev + 2;
+        return prev + Math.floor(Math.random()*2+2);
       });
-    }, 300);
+    }, 1600);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrFactIndex(prev => (prev+Math.ceil(Math.random()*NUM_NUTRITION_FACTS)) % NUM_NUTRITION_FACTS);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, []);
@@ -46,7 +62,7 @@ function LoadingScreen({progress, setProgress, maxProgress}) {
         {/* Loading Text */}
         <div className="text-center space-y-2">
           <h1 className="text-gray-900 animate-fade-in">Loading</h1>
-          <p className="text-gray-500">Preparing your experience...</p>
+          <p className="text-gray-500"><strong>Did you know?</strong> {nutritionFacts[currFactIndex].fact}</p>
         </div>
 
         {/* Progress Bar */}
@@ -84,7 +100,7 @@ function LoadingScreen({progress, setProgress, maxProgress}) {
 
 export default function ScanPage(){
     const [scanProgress, setScanProgress] = useState(0)
-    const [maxProgress, setMaxProgress] = useState(50)
+    const [maxProgress, setMaxProgress] = useState(MAX_PROGRESS_IMAGEPARSE)
     const [ingredients, setIngredients] = useState({})
     const location = useLocation()
     const navigate = useNavigate()
@@ -93,11 +109,11 @@ export default function ScanPage(){
 
     useEffect(()=>{
       console.log(maxProgress)
-      if(maxProgress < 95 && file != {}){
+      if(maxProgress < MAX_PROGRESS_LLMANALYZE && file != {}){
         fetchParseImage()
-      } else if(maxProgress >= 95){
+      } else if(maxProgress >= MAX_PROGRESS_LLMANALYZE){
         fetchLLMAnalyze()
-      } else if(maxProgress == 100){
+      } else if(maxProgress == MAX_PROGRESS){
         navigate('/')
       }
     }, [maxProgress])
@@ -117,6 +133,7 @@ export default function ScanPage(){
             const result = await response.json()
             if(response.ok){
                 setIngredients(result.body)
+                setScanProgress(95)
                 setMaxProgress(95)
             }
         } catch (error) {
