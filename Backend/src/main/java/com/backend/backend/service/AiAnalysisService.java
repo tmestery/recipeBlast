@@ -2,6 +2,7 @@ package com.backend.backend.service;
 
 import com.backend.backend.model.FoodItem;
 import com.backend.backend.model.FoodItemRepository;
+import com.backend.backend.utils.OCRParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -23,6 +24,10 @@ public class AiAnalysisService {
     }
 
     public Map<String, Object> analyzeIngredientsWithRecommendation(String productName, String ingredientsList) {
+        OCRParser ocrParse = new OCRParser();
+        ingredientsList = ocrParse.extractParsedText(ingredientsList);
+        System.out.println(ingredientsList);
+
         // 1. Updated prompt
         String prompt = "You are a nutrition analysis model. You are given a product name and its ingredients list. " +
                 "Evaluate the product's health quality.\n\n" +
@@ -38,7 +43,7 @@ public class AiAnalysisService {
                 "    {\"name\": \"<ingredient>\", \"reason\": \"<reason>\", \"score\": <number>}\n" +
                 "  ],\n" +
                 "  \"recommended_alternatives\": [\n" +
-                "    {\"name\": \"<product>\", \"brand\": \"<brand>\", \"reason\": \"<why healthier>\", \"score\": <number>},\n" +
+                "    {\"name\": \"<product>\", \"reason\": \"<why healthier>\", \"score\": <number>},\n" +
                 "    {}, {}, {}\n" +
                 "  ]\n" +
                 "}\n\n" +
@@ -123,5 +128,4 @@ public class AiAnalysisService {
             );
         }
     }
-
 }
