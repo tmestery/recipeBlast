@@ -1,4 +1,4 @@
-# recipeBlast
+# nutriLeaf
 
 **INSTANTLY understand what's ACTUALLY in your food.**
 
@@ -82,4 +82,5 @@ brew install tesseract
 ## License
 
 MIT License
+
 
