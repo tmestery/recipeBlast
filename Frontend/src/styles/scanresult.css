@@ -1,0 +1,24 @@
+h1, p{
+    color: var(--color-indigodye);
+}
+.scan-result-desc {
+    font-size: x-large;
+}
+.scan-result-list-item {
+    box-shadow: 1px 1px 1px var(--color-powderblue);
+}
+.scan-result-list-item:hover {
+    box-shadow: 2px 2px 2px var(--color-powderblue);
+}
+.scan-result-button {
+    border-radius: 0px;
+    border-width: 2px;
+    margin-top: 20px;
+    background-color: var(--color-powderblue);
+    color: var(--color-indigodye);
+}
+.scan-result-button:hover {
+    cursor: pointer;
+    background-color: var(--color-indigodye);
+    color: var(--color-powderblue);
+}

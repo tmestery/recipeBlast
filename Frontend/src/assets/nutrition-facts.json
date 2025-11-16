@@ -1,62 +1,22 @@
 [
-    {
-        "fact": "Carbohydrates provide 4 calories per gram."
-    },
-    {
-        "fact": "Proteins provide 4 calories per gram."
-    },
-    {
-        "fact": "Fats provide 9 calories per gram, making them the most calorie-dense macronutrient."
-    },
-    {
-        "fact": "Alcohol provides 7 calories per gram, though it’s not a nutrient."
-    },
-    {
-        "fact": "Fiber is a type of carbohydrate your body cannot digest; it helps digestion and lowers cholesterol."
-    },
-    {
-        "fact": "Vitamin A supports vision, immune function, and skin health."
-    },
-    {
-        "fact": "Vitamin C is an antioxidant that boosts the immune system and aids collagen production."
-    },
-    {
-        "fact": "Vitamin D helps calcium absorption and supports bone health."
-    },
-    {
-        "fact": "Vitamin E acts as an antioxidant, protecting cells from damage."
-    },
-    {
-        "fact": "Vitamin K is essential for blood clotting and bone health."
-    },
-    {
-        "fact": "Calcium is crucial for strong bones and teeth."
-    },
-    {
-        "fact": "Iron is necessary for hemoglobin production and oxygen transport."
-    },
-    {
-        "fact": "Magnesium supports muscle and nerve function, and energy production."
-    },
-    {
-        "fact": "Potassium helps regulate blood pressure and fluid balance."
-    },
-    {
-        "fact": "Zinc supports immune function, wound healing, and DNA synthesis."
-    },
-    {
-        "fact": "Water makes up around 60% of an adult human body, making it essential for life."
-    },
-    {
-        "fact": "Unsaturated fats (like in olive oil, nuts, and avocado) are healthier than saturated fats."
-    },
-    {
-        "fact": "Trans fats are unhealthy and increase the risk of heart disease."
-    },
-    {
-        "fact": "Whole grains are richer in fiber and nutrients than refined grains."
-    },
-    {
-        "fact": "Processed sugars provide energy but few nutrients and can contribute to obesity and diabetes if consumed excessively."
-    }
+  {"fact": "Carbohydrates provide 4 calories per gram."},
+  {"fact": "Proteins provide 4 calories per gram."},
+  {"fact": "Fats provide 9 calories per gram, making them the most calorie-dense macronutrient."},
+  {"fact": "Alcohol provides 7 calories per gram, though it’s not a nutrient."},
+  {"fact": "Fiber is a type of carbohydrate your body cannot digest; it helps digestion and lowers cholesterol."},
+  {"fact": "Vitamin A supports vision, immune function, and skin health."},
+  {"fact": "Vitamin C is an antioxidant that boosts the immune system and aids collagen production."},
+  {"fact": "Vitamin D helps calcium absorption and supports bone health."},
+  {"fact": "Vitamin E acts as an antioxidant, protecting cells from damage."},
+  {"fact": "Vitamin K is essential for blood clotting and bone health."},
+  {"fact": "Calcium is crucial for strong bones and teeth."},
+  {"fact": "Iron is necessary for hemoglobin production and oxygen transport."},
+  {"fact": "Magnesium supports muscle and nerve function, and energy production."},
+  {"fact": "Potassium helps regulate blood pressure and fluid balance."},
+  {"fact": "Zinc supports immune function, wound healing, and DNA synthesis."},
+  {"fact": "Water makes up around 60% of an adult human body, making it essential for life."},
+  {"fact": "Unsaturated fats (like in olive oil, nuts, and avocado) are healthier than saturated fats."},
+  {"fact": "Trans fats are unhealthy and increase the risk of heart disease."},
+  {"fact": "Whole grains are richer in fiber and nutrients than refined grains."},
+  {"fact": "Processed sugars provide energy but few nutrients and can contribute to obesity and diabetes if consumed excessively."}
 ]

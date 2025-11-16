@@ -12,8 +12,7 @@ export default function ScanPage(){
     const [ingredients, setIngredients] = useState({})
     const location = useLocation()
     const navigate = useNavigate()
-
-    const {file} = location.state || {};
+    const {file} = location.state || {}
 
     useEffect(()=>{
       console.log(maxProgress)
@@ -66,9 +65,5 @@ export default function ScanPage(){
         }
     }
     
-    return(
-    <>
-    <LoadingScreen progress={scanProgress} setProgress={setScanProgress} maxProgress={maxProgress} />
-    </>
-    )
+    return <LoadingScreen progress={scanProgress} setProgress={setScanProgress} maxProgress={maxProgress} />
 }
