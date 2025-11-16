@@ -58,7 +58,7 @@ export default function ScanResultPage() {
                   </div>
                   <div className="flex-1">
                     <h3 className="text-gray-900 mb-1">{ingredient.name}</h3>
-                    <p className="text-sm text-gray-600">{ingredient.description}</p>
+                    <p className="text-sm text-gray-600">{ingredient.reason}</p>
                   </div>
                 </div>
               </div>
@@ -162,7 +162,7 @@ export default function ScanResultPage() {
                   <h3 className="text-gray-900 mb-1">{product.name}</h3>
                   <div className="flex items-center gap-2">
                     <span className="inline-flex items-center px-2 py-1 rounded-full bg-green-100 text-green-700 text-sm">
-                      {score - product.score} Healthier
+                      {product.score - score} Healthier
                     </span>
                     <span className="text-sm text-gray-500">Score: {product.score}</span>
                   </div>
