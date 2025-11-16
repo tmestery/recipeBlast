@@ -1,46 +1,5 @@
-// import {Link, useNavigate} from 'react-router-dom'
-// import Navbar from '../components/Navbar.jsx'
-// import '../styles/homepage.css'
-
-// export default function HomePage({userInfo}){
-
-
-//     return(
-//         <>
-//         <Navbar />
-//         {userInfo.username ? 
-//         <h1 className="page-header">Welcome, {userInfo.username}!</h1> : 
-//         <h1 className="page-header">Welcome to RecipeBlast!</h1>}
-//         <hr />
-
-//         <div className="page-content">
-//             <div className="page-content-panel" id="history-panel">
-//                 <h1 className="page-content-header">Recent Scans</h1>
-//             </div>
-//             <div className="page-content-panel" id="feature-panel">
-//                 <h1 className="page-content-header">New Scan</h1>
-//                 <form className="scan-upload-form">
-//                     <label>New Scan</label>
-//                     <input
-//                         type="file"
-//                         id="file-input"
-//                         name="scanner"
-//                         accept="image/*"
-//                         onChange={startScan}
-//                         multiple={false}
-//                     />
-//                 </form>
-//             </div>
-//             <div className="page-content-panel" id="profile-panel">
-//                 <h1 className="page-content-header">Your Profile</h1>
-//             </div>
-//         </div>
-//         </>
-//     )
-// }
-
-import React, { useState } from 'react';
-import { Upload, Camera } from 'lucide-react';
+import { useState } from 'react';
+import { Upload, Camera, User} from 'lucide-react';
 import {useNavigate} from 'react-router-dom'
 
 export default function HomeScreen({userInfo}) {
@@ -62,11 +21,15 @@ export default function HomeScreen({userInfo}) {
         <div className="max-w-4xl mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              {/* <NutritionLogo size={50} variant="primary" /> */}
               <div>
-                <h1 className="text-green-700">Welcome back, {userInfo.username}</h1>
+                {userInfo.username ? <h1 className="text-green-700">Welcome back, {userInfo.username}!</h1> :
+                <h1 className="text-green-700">Welcome back!</h1>}
                 <p className="text-gray-500 text-sm">Ready to scan your meal?</p>
               </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <a href="/auth/login">{userInfo.username ? "Log Out" : "Log In"}</a>
+              <a href="/auth/login"><User size={46}/></a>
             </div>
           </div>
         </div>
