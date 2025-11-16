@@ -21,8 +21,12 @@ public class FoodItem {
     @Column(columnDefinition = "TEXT")
     private String nutritionBreakdown;
 
+    @Column(columnDefinition = "TEXT")
     private int healthScore;
+
     private double costEstimate;
+
+    @Column(columnDefinition = "TEXT")
     private String generatedWarnings;
 
     @Column(columnDefinition = "TEXT")

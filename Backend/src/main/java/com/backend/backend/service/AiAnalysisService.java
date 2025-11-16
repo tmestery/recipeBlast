@@ -23,19 +23,24 @@ public class AiAnalysisService {
     }
 
     public Map<String, Object> analyzeIngredientsWithRecommendation(String productName, String ingredientsList) {
+        // 1. Updated prompt
         String prompt = "You are a nutrition analysis model. You are given a product name and its ingredients list. " +
                 "Evaluate the product's health quality.\n\n" +
-                "Output ONLY the following JSON:\n" +
+                "Always provide 3-4 ingredients of concern, even if fewer are clearly problematic.\n" +
+                "For each ingredient of concern, provide a score (0-50) and a short reason why it is concerning.\n" +
+                "Provide 4 recommended healthier alternatives, each with a score (0-100) and a short reason.\n\n" +
+                "Output ONLY valid JSON with this structure:\n" +
                 "{\n" +
                 "  \"product_name\": \"" + productName + "\",\n" +
-                "  \"score\": <number>,\n" +
+                "  \"score\": <overall score>,\n" +
                 "  \"analysis\": \"<short explanation>\",\n" +
-                "  \"ingredients_of_concern\": [\"ingredient1\", \"ingredient2\"],\n" +
-                "  \"recommended_alternative\": {\n" +
-                "     \"name\": \"<similar healthier product>\",\n" +
-                "     \"brand\": \"<brand name>\",\n" +
-                "     \"reason\": \"<why it is healthier>\"\n" +
-                "  }\n" +
+                "  \"ingredients_of_concern\": [\n" +
+                "    {\"name\": \"<ingredient>\", \"reason\": \"<reason>\", \"score\": <number>}\n" +
+                "  ],\n" +
+                "  \"recommended_alternatives\": [\n" +
+                "    {\"name\": \"<product>\", \"brand\": \"<brand>\", \"reason\": \"<why healthier>\", \"score\": <number>},\n" +
+                "    {}, {}, {}\n" +
+                "  ]\n" +
                 "}\n\n" +
                 "Ingredients List: " + ingredientsList;
 
@@ -46,14 +51,14 @@ public class AiAnalysisService {
         );
 
         try {
-            // Step 1: call Ollama
+            // 2. Call Ollama
             String responseString = restTemplate.postForObject(OLLAMA_URL, requestBody, String.class);
 
-            // Step 2: parse top-level response
+            // 3. Parse top-level response
             Map<String, Object> topLevel = objectMapper.readValue(responseString, Map.class);
             String aiText = (String) topLevel.get("response");
 
-            // Step 3: extract JSON block from response string
+            // 4. Extract JSON block
             int start = aiText.indexOf('{');
             int end = aiText.lastIndexOf('}');
             if (start == -1 || end == -1 || end <= start) {
@@ -61,10 +66,10 @@ public class AiAnalysisService {
             }
             String jsonBlock = aiText.substring(start, end + 1);
 
-            // Step 4: parse the JSON block
+            // 5. Parse JSON block
             Map<String, Object> aiResult = objectMapper.readValue(jsonBlock, Map.class);
 
-            // Step 5: save/update FoodItem in DB
+            // 6. Save/update FoodItem in DB (same as before)
             FoodItem foodItem = foodItemRepository.findByItemName(productName)
                     .orElse(new FoodItem());
             foodItem.setItemName(productName);
@@ -72,30 +77,39 @@ public class AiAnalysisService {
             foodItem.setHealthScore(((Number) aiResult.getOrDefault("score", 0)).intValue());
             foodItem.setNutritionBreakdown((String) aiResult.getOrDefault("analysis", "N/A"));
 
-            List<?> concernList = (List<?>) aiResult.getOrDefault("ingredients_of_concern", List.of());
-            List<String> ingredientsOfConcern = concernList.stream()
-                    .map(Object::toString)
+            // Parse ingredients_of_concern (now objects)
+            List<Map<String, Object>> concernList = (List<Map<String, Object>>) aiResult.getOrDefault("ingredients_of_concern", List.of());
+            List<String> warnings = concernList.stream()
+                    .map(c -> String.format("%s (score %s): %s",
+                            c.get("name"),
+                            c.get("score"),
+                            c.get("reason")))
                     .toList();
-            foodItem.setGeneratedWarnings(String.join(", ", ingredientsOfConcern));
+            foodItem.setGeneratedWarnings(String.join(", ", warnings));
 
-            Map<String, Object> alt = (Map<String, Object>) aiResult.get("recommended_alternative");
-            if (alt != null) {
-                String recText = String.format("Try %s by %s — %s",
-                        alt.getOrDefault("name", "another product"),
-                        alt.getOrDefault("brand", "unknown brand"),
-                        alt.getOrDefault("reason", ""));
+            // Parse recommended_alternatives (array of 4)
+            List<Map<String, Object>> alternatives = (List<Map<String, Object>>) aiResult.getOrDefault("recommended_alternatives", List.of());
+            if (!alternatives.isEmpty()) {
+                String recText = alternatives.stream()
+                        .map(a -> String.format("%s by %s (score %s): %s",
+                                a.get("name"),
+                                a.get("brand"),
+                                a.get("score"),
+                                a.get("reason")))
+                        .reduce((a, b) -> a + " | " + b)
+                        .orElse("");
                 foodItem.setRecommendations(recText);
             }
 
             foodItemRepository.save(foodItem);
 
-            // Step 6: return cleaned JSON to frontend
+            // 7. Return clean JSON
             return Map.of(
                     "product_name", productName,
                     "score", foodItem.getHealthScore(),
                     "analysis", foodItem.getNutritionBreakdown(),
-                    "ingredients_of_concern", ingredientsOfConcern,
-                    "recommended_alternative", alt != null ? alt : Map.of()
+                    "ingredients_of_concern", concernList,
+                    "recommended_alternatives", alternatives
             );
 
         } catch (Exception e) {
@@ -105,7 +119,7 @@ public class AiAnalysisService {
                     "score", 0,
                     "analysis", "Error parsing LLM response",
                     "ingredients_of_concern", List.of(),
-                    "recommended_alternative", Map.of()
+                    "recommended_alternatives", List.of()
             );
         }
     }
