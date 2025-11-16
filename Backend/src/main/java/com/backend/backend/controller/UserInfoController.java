@@ -56,8 +56,6 @@ public class UserInfoController {
     // GET GET http://localhost:8080/info/food/items/{username}
     @GetMapping("/food/items/{username}")
     public List<FoodItem> getFoodItemsByUser(@PathVariable String username) {
-        WebUser user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        return foodItemRepository.findByUser(user);
+        return foodItemRepository.findAllByUsername(username);
     }
 }

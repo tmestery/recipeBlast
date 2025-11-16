@@ -26,6 +26,14 @@ public class FoodItem {
     @Column(columnDefinition = "TEXT")
     private String recommendations;
 
+    @ManyToOne
+    @JoinColumn(name = "web_user")  // this should match your DB column
+    private WebUser user;
+
+    public WebUser getUser() { return user; }
+
+    public void setUser(WebUser user) { this.user = user; }
+
     public String getItemName() {
         return itemName;
     }
